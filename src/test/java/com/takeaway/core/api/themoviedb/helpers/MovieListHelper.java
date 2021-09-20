@@ -2,8 +2,8 @@ package com.takeaway.core.api.themoviedb.helpers;
 
 import com.takeaway.core.api.RestAssuredSettings;
 import com.takeaway.core.api.themoviedb.EndPoints;
-import com.takeaway.core.api.themoviedb.MovieListFactory;
-import com.takeaway.core.api.themoviedb.SpecFactory;
+import com.takeaway.core.api.themoviedb.factories.MovieListFactory;
+import com.takeaway.core.api.themoviedb.factories.SpecFactory;
 import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.given;
@@ -23,7 +23,7 @@ public class MovieListHelper {
   }
 
   public static Response createPrivateList() {
-    return createList(MovieListFactory.getPrivateList().toString());
+    return createList(MovieListFactory.getListWithAccess(false).toString());
   }
 
   public static Response createPublicDefaultList() {

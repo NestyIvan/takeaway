@@ -29,6 +29,14 @@ public class RestAssuredSettings {
     responseSpec = new ResponseSpecBuilder().build();
   }
 
+  public static final RequestSpecification requestSpecNoAuth =
+      new RequestSpecBuilder()
+          .setBaseUri(BASE_URI)
+          .setAccept(ContentType.JSON)
+          .setContentType(ContentType.JSON)
+          .log(LogDetail.ALL)
+          .build();
+
   public static RequestSpecification getRequestSpecWithAuth() {
     return new RequestSpecBuilder()
         .setBaseUri(BASE_URI)

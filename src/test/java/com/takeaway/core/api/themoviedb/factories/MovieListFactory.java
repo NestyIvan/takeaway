@@ -1,4 +1,4 @@
-package com.takeaway.core.api.themoviedb;
+package com.takeaway.core.api.themoviedb.factories;
 
 import com.github.javafaker.Faker;
 import org.json.JSONObject;
@@ -19,10 +19,10 @@ public class MovieListFactory {
         .put("iso_3166_1", "EN");
   }
 
-  public static JSONObject getPrivateList() {
+  public static JSONObject getListWithAccess(boolean isPublic) {
     return new JSONObject()
         .put("name", faker.regexify("[a-z1-9]{10}"))
         .put("iso_639_1", "en")
-        .put("public", false);
+        .put("public", isPublic);
   }
 }

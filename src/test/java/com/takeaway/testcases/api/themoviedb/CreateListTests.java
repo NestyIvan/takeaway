@@ -2,8 +2,8 @@ package com.takeaway.testcases.api.themoviedb;
 
 import com.takeaway.core.api.RestAssuredSettings;
 import com.takeaway.core.api.themoviedb.EndPoints;
-import com.takeaway.core.api.themoviedb.MovieListFactory;
-import com.takeaway.core.api.themoviedb.SpecFactory;
+import com.takeaway.core.api.themoviedb.factories.MovieListFactory;
+import com.takeaway.core.api.themoviedb.factories.SpecFactory;
 import com.takeaway.core.api.themoviedb.helpers.MovieListHelper;
 import io.restassured.response.Response;
 import org.junit.AfterClass;
@@ -14,7 +14,7 @@ import java.util.List;
 
 import static io.restassured.RestAssured.given;
 
-public class CreateListTests extends BaseTest {
+public class CreateListTests {
 
   private static final List<Integer> listIds = new ArrayList<>();
 
@@ -25,16 +25,7 @@ public class CreateListTests extends BaseTest {
 
   @Test
   public void createListWithRequiredFieldsTest() {
-    Response response =
-        given()
-            .spec(RestAssuredSettings.getRequestSpecWithAuth())
-            .body(MovieListFactory.getDefaultList().toString())
-            .when()
-            .post(EndPoints.CREATE_LIST, RestAssuredSettings.API_KEY)
-            .then()
-            .spec(SpecFactory.getCreateListSpec())
-            .extract()
-            .response();
+    Response response = MovieListHelper.createPublicDefaultList();
     listIds.add(response.body().jsonPath().getInt("id"));
   }
 
@@ -59,6 +50,7 @@ public class CreateListTests extends BaseTest {
     int listId = response.body().jsonPath().getInt("id");
     // try to get the list without access token
     given()
+        .spec(RestAssuredSettings.requestSpecNoAuth)
         .get(EndPoints.GET_LIST, listId, 1, RestAssuredSettings.API_KEY)
         .then()
         .spec(SpecFactory.getListSpecUnauthorized());

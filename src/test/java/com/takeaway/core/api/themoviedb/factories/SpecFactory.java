@@ -1,5 +1,6 @@
-package com.takeaway.core.api.themoviedb;
+package com.takeaway.core.api.themoviedb.factories;
 
+import com.takeaway.core.api.themoviedb.model.ItemList;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.specification.ResponseSpecification;
 import org.json.JSONObject;
@@ -53,6 +54,16 @@ public class SpecFactory {
         .expectBody("success", is(false))
         .expectBody("status_code", is(34))
         .expectBody("status_message", is("The resource you requested could not be found."))
+        .build();
+  }
+
+  public static ResponseSpecification getAddItemsSpecSuccess(ItemList itemList) {
+    return new ResponseSpecBuilder()
+        .expectStatusCode(200)
+        .expectBody("status_code", is(1))
+        .expectBody("status_message", is("Success."))
+        .expectBody("success", is(true))
+        .expectBody("results.size()", is(itemList.getItems().size()))
         .build();
   }
 }
