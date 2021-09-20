@@ -33,7 +33,7 @@ public class CreateListTests {
   public void createListWithAllFieldsTest() {
     Response response =
         given()
-            .spec(RestAssuredSettings.getRequestSpecWithAuth())
+            .spec(RestAssuredSettings.requestSpecWithAuth)
             .body(MovieListFactory.getListWithAllFields().toString())
             .when()
             .post(EndPoints.CREATE_LIST, RestAssuredSettings.API_KEY)
@@ -56,7 +56,7 @@ public class CreateListTests {
         .spec(SpecFactory.getListSpecUnauthorized());
     // get the list with access token
     given()
-        .spec(RestAssuredSettings.getRequestSpecWithAuth())
+        .spec(RestAssuredSettings.requestSpecWithAuth)
         .get(EndPoints.GET_LIST, listId, 1, RestAssuredSettings.API_KEY)
         .then()
         .statusCode(200);

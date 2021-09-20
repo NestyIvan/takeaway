@@ -12,7 +12,7 @@ public class MovieListHelper {
 
   public static Response createList(String body) {
     return given()
-        .spec(RestAssuredSettings.getRequestSpecWithAuth())
+        .spec(RestAssuredSettings.requestSpecWithAuth)
         .body(body)
         .when()
         .post(EndPoints.CREATE_LIST, RestAssuredSettings.API_KEY)
@@ -32,7 +32,7 @@ public class MovieListHelper {
 
   public static void deleteList(int listId) {
     given()
-        .spec(RestAssuredSettings.getRequestSpecWithAuth())
+        .spec(RestAssuredSettings.requestSpecWithAuth)
         .expect()
         .response()
         .statusCode(200)

@@ -33,7 +33,7 @@ public class UpdateListTests {
   @Test
   public void updateListAllFieldsTest() {
     given()
-        .spec(RestAssuredSettings.getRequestSpecWithAuth())
+        .spec(RestAssuredSettings.requestSpecWithAuth)
         .body(MovieListFactory.getListWithAllFields().toString())
         .when()
         .put(EndPoints.UPDATE_LIST, listId)
@@ -53,7 +53,7 @@ public class UpdateListTests {
         .spec(SpecFactory.getUpdateListSpecUnauthorized());
     // update with access token
     given()
-        .spec(RestAssuredSettings.getRequestSpecWithAuth())
+        .spec(RestAssuredSettings.requestSpecWithAuth)
         .body(MovieListFactory.getListWithAllFields().toString())
         .when()
         .put(EndPoints.UPDATE_LIST, listId)
@@ -68,7 +68,7 @@ public class UpdateListTests {
     int listId = response.body().jsonPath().getInt("id");
     // make public list private
     given()
-        .spec(RestAssuredSettings.getRequestSpecWithAuth())
+        .spec(RestAssuredSettings.requestSpecWithAuth)
         .body(MovieListFactory.getListWithAccess(false).toString())
         .when()
         .put(EndPoints.UPDATE_LIST, listId)
@@ -90,7 +90,7 @@ public class UpdateListTests {
     int listId = response.body().jsonPath().getInt("id");
     // make private list public
     given()
-        .spec(RestAssuredSettings.getRequestSpecWithAuth())
+        .spec(RestAssuredSettings.requestSpecWithAuth)
         .body(publicMovieList.toString())
         .when()
         .put(EndPoints.UPDATE_LIST, listId)
@@ -108,7 +108,7 @@ public class UpdateListTests {
   @Test
   public void updateNonExistingListTest() {
     given()
-        .spec(RestAssuredSettings.getRequestSpecWithAuth())
+        .spec(RestAssuredSettings.requestSpecWithAuth)
         .body(MovieListFactory.getListWithAllFields().toString())
         .when()
         .put(EndPoints.UPDATE_LIST, listId * 10)

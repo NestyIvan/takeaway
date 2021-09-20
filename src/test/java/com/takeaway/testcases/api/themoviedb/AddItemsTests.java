@@ -37,7 +37,7 @@ public class AddItemsTests {
   public void addOneItemTest() {
     ItemList itemList = ItemsFactory.getListWithMediaId(Movie.FIGHT_CLUB);
     given()
-        .spec(RestAssuredSettings.getRequestSpecWithAuth())
+        .spec(RestAssuredSettings.requestSpecWithAuth)
         .body(itemList)
         .when()
         .post(EndPoints.ADD_ITEMS, listId)
