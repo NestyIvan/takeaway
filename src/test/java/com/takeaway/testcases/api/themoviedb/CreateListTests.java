@@ -4,6 +4,7 @@ import com.takeaway.core.api.RestAssuredSettings;
 import com.takeaway.core.api.themoviedb.EndPoints;
 import com.takeaway.core.api.themoviedb.MovieListFactory;
 import com.takeaway.core.api.themoviedb.SpecFactory;
+import com.takeaway.core.api.themoviedb.helpers.MovieListHelper;
 import io.restassured.response.Response;
 import org.junit.AfterClass;
 import org.junit.Test;
@@ -19,15 +20,7 @@ public class CreateListTests extends BaseTest {
 
   @AfterClass
   public static void cleanUp() {
-    listIds.forEach(
-        listId ->
-            given()
-                .spec(RestAssuredSettings.getRequestSpecWithAuth())
-                .expect()
-                .response()
-                .statusCode(200)
-                .when()
-                .delete(EndPoints.DELETE_LIST, listId, RestAssuredSettings.API_KEY));
+    listIds.forEach(MovieListHelper::deleteList);
   }
 
   @Test
@@ -62,19 +55,13 @@ public class CreateListTests extends BaseTest {
 
   @Test
   public void createPrivateListTest() {
-    Response response =
-        given()
-            .spec(RestAssuredSettings.getRequestSpecWithAuth())
-            .body(MovieListFactory.getPrivateList().toString())
-            .when()
-            .post(EndPoints.CREATE_LIST, RestAssuredSettings.API_KEY)
-            .then()
-            .spec(SpecFactory.getCreateListSpec())
-            .extract()
-            .response();
+    Response response = MovieListHelper.createPrivateList();
     int listId = response.body().jsonPath().getInt("id");
     // try to get the list without access token
-    given().get(EndPoints.GET_LIST, listId, 1, RestAssuredSettings.API_KEY).then().statusCode(401);
+    given()
+        .get(EndPoints.GET_LIST, listId, 1, RestAssuredSettings.API_KEY)
+        .then()
+        .spec(SpecFactory.getListSpecUnauthorized());
     // get the list with access token
     given()
         .spec(RestAssuredSettings.getRequestSpecWithAuth())
