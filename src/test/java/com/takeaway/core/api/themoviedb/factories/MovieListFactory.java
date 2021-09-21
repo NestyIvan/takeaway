@@ -18,7 +18,15 @@ public class MovieListFactory {
     return MovieList.builder()
         .name(faker.regexify("[a-z]{10}"))
         .iso6391("en")
-        .description(faker.rickAndMorty().quote())
+        .description(faker.chuckNorris().fact())
+        .publicValue(true)
+        .iso31661("EN")
+        .build();
+  }
+
+  public static MovieList getListWithOptionalFieldsOnly() {
+    return MovieList.builder()
+        .description(faker.chuckNorris().fact())
         .publicValue(true)
         .iso31661("EN")
         .build();

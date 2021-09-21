@@ -54,6 +54,17 @@ public class CreateListTests extends BaseTests {
   }
 
   @Test
+  public void createListWithOptionalFieldsOnlyNegativeTest() {
+    given()
+        .spec(RestAssuredSettings.requestSpecWithAuth)
+        .body(MovieListFactory.getListWithOptionalFieldsOnly())
+        .when()
+        .post(EndPoints.CREATE_LIST, RestAssuredSettings.API_KEY)
+        .then()
+        .statusCode(422);
+  }
+
+  @Test
   public void createListNoAuthTest() {
     given()
         .spec(RestAssuredSettings.requestSpecNoAuth)
