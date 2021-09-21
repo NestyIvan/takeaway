@@ -9,4 +9,5 @@ public class EndPoints {
   public static final String DELETE_LIST = "/list/{listId}?api_key={apiKey}";
 
   public static final String ADD_ITEMS = "/list/{listId}/items";
+  public static final String UPDATE_ITEMS = "/list/{listId}/items";
 }

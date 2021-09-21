@@ -4,7 +4,6 @@ import com.takeaway.core.api.RestAssuredSettings;
 import com.takeaway.core.api.themoviedb.EndPoints;
 import com.takeaway.core.api.themoviedb.factories.MovieListFactory;
 import com.takeaway.core.api.themoviedb.factories.SpecFactory;
-import com.takeaway.core.api.themoviedb.model.ItemList;
 import com.takeaway.core.api.themoviedb.model.MovieList;
 import io.restassured.response.Response;
 
