@@ -5,6 +5,7 @@ import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.specification.ResponseSpecification;
 import org.json.JSONObject;
 
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 
 public class SpecFactory {
@@ -64,6 +65,17 @@ public class SpecFactory {
         .expectBody("status_message", is("Success."))
         .expectBody("success", is(true))
         .expectBody("results.size()", is(itemList.getItems().size()))
+        .build();
+  }
+
+  public static ResponseSpecification getClearListSpecSuccess(int listId) {
+    return new ResponseSpecBuilder()
+        .expectStatusCode(200)
+        .expectBody("status_code", is(1))
+        .expectBody("status_message", is("Success."))
+        .expectBody("success", is(true))
+        .expectBody("id", is(listId))
+        .expectBody("items_deleted", greaterThan(0))
         .build();
   }
 }

@@ -11,11 +11,9 @@ import java.util.List;
 public class ItemsFactory {
   private static final Faker faker = new Faker();
 
-  public static ItemList getItemList(int numberOfItems) {
+  public static ItemList getAllMediaList() {
     List<Item> itemList = new ArrayList<>();
-    for (int i = 0; i < numberOfItems; i++) {
-      itemList.add(new Item(faker.regexify("[a-z1-9]{10}"), faker.random().nextInt(1, 1000)));
-    }
+    Movie.getAllMovies().forEach(it -> itemList.add(new Item(it.getMediaType(), it.getMediaId())));
     return new ItemList(itemList);
   }
 
