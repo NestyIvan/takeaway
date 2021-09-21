@@ -21,7 +21,6 @@ dependencies {
     testImplementation 'org.json:json:20210307'
     testImplementation 'com.github.javafaker:javafaker:1.0.2'
     testImplementation 'com.google.code.gson:gson:2.8.8'
-    testImplementation 'log4j:log4j:1.2.17'
 }
 
 task libs(type: Sync) {
@@ -32,12 +31,10 @@ task libs(type: Sync) {
 classes.dependsOn libs
 
 test {
-    useJUnit()
-    //maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
-}
-
-task testAPI(type: Test) {
     systemProperty "api.base.uri", apiBaseURI
     systemProperty "api.access.token", apiAccessToken
     systemProperty "api.key", apiKey
+
+    useJUnit()
+    maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
 }

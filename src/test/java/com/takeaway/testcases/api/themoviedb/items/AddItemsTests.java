@@ -12,7 +12,6 @@ import com.takeaway.core.api.themoviedb.model.ItemList;
 import com.takeaway.core.api.themoviedb.model.MovieList;
 import com.takeaway.testcases.api.themoviedb.BaseTests;
 import io.restassured.response.Response;
-import lombok.extern.log4j.Log4j;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +21,6 @@ import java.util.Collections;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-@Log4j
 public class AddItemsTests extends BaseTests {
 
   private Response defaultListResponse;
