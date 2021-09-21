@@ -6,6 +6,9 @@ import com.takeaway.core.api.themoviedb.factories.MovieListFactory;
 import com.takeaway.core.api.themoviedb.factories.SpecFactory;
 import com.takeaway.core.api.themoviedb.helpers.MovieListHelper;
 import com.takeaway.core.api.themoviedb.model.MovieList;
+import io.restassured.RestAssured;
+import io.restassured.filter.log.RequestLoggingFilter;
+import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.response.Response;
 import lombok.extern.log4j.Log4j;
 import org.junit.AfterClass;
@@ -21,6 +24,7 @@ public class UpdateListTests {
 
   @BeforeClass
   public static void setUp() {
+    RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
     Response response = MovieListHelper.createPublicDefaultList();
     listId = response.body().jsonPath().getInt("id");
   }

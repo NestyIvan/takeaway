@@ -5,12 +5,13 @@ import com.takeaway.core.api.themoviedb.EndPoints;
 import com.takeaway.core.api.themoviedb.factories.MovieListFactory;
 import com.takeaway.core.api.themoviedb.factories.SpecFactory;
 import com.takeaway.core.api.themoviedb.helpers.MovieListHelper;
+import com.takeaway.testcases.api.themoviedb.BaseTests;
 import io.restassured.response.Response;
 import org.junit.Test;
 
 import static io.restassured.RestAssured.given;
 
-public class CreateListTests {
+public class CreateListTests extends BaseTests {
 
   @Test
   public void createListWithRequiredFieldsTest() {

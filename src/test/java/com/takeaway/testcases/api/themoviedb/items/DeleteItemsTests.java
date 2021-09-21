@@ -10,6 +10,7 @@ import com.takeaway.core.api.themoviedb.helpers.MovieListHelper;
 import com.takeaway.core.api.themoviedb.model.Item;
 import com.takeaway.core.api.themoviedb.model.ItemList;
 import com.takeaway.core.api.themoviedb.model.MovieList;
+import com.takeaway.testcases.api.themoviedb.BaseTests;
 import io.restassured.response.Response;
 import org.junit.After;
 import org.junit.Before;
@@ -22,18 +23,18 @@ import java.util.List;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class DeleteItemsTests {
+public class DeleteItemsTests extends BaseTests {
 
   private static final ItemList allMediaList = ItemsFactory.getAllMediaList();
   private Response defaultListResponse;
 
   @Before
-  public void setUp() {
+  public void setUpEach() {
     defaultListResponse = MovieListHelper.createPublicDefaultList();
   }
 
   @After
-  public void cleanUp() {
+  public void cleanUpEach() {
     MovieListHelper.deleteList(defaultListResponse.body().jsonPath().getInt("id"));
   }
 
