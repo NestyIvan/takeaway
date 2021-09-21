@@ -1,4 +1,4 @@
-package com.takeaway.testcases.api.themoviedb;
+package com.takeaway.testcases.api.themoviedb.list;
 
 import com.takeaway.core.api.RestAssuredSettings;
 import com.takeaway.core.api.themoviedb.EndPoints;

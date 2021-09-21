@@ -1,4 +1,4 @@
-package com.takeaway.testcases.api.themoviedb;
+package com.takeaway.testcases.api.themoviedb.items;
 
 import com.takeaway.core.api.themoviedb.factories.ItemsFactory;
 import com.takeaway.core.api.themoviedb.helpers.ItemHelper;

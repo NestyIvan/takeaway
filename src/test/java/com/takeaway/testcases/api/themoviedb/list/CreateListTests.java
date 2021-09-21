@@ -1,4 +1,4 @@
-package com.takeaway.testcases.api.themoviedb;
+package com.takeaway.testcases.api.themoviedb.list;
 
 import com.takeaway.core.api.RestAssuredSettings;
 import com.takeaway.core.api.themoviedb.EndPoints;
@@ -6,27 +6,16 @@ import com.takeaway.core.api.themoviedb.factories.MovieListFactory;
 import com.takeaway.core.api.themoviedb.factories.SpecFactory;
 import com.takeaway.core.api.themoviedb.helpers.MovieListHelper;
 import io.restassured.response.Response;
-import org.junit.AfterClass;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static io.restassured.RestAssured.given;
 
 public class CreateListTests {
 
-  private static final List<Integer> listIds = new ArrayList<>();
-
-  @AfterClass
-  public static void cleanUp() {
-    listIds.forEach(MovieListHelper::deleteList);
-  }
-
   @Test
   public void createListWithRequiredFieldsTest() {
     Response response = MovieListHelper.createPublicDefaultList();
-    listIds.add(response.body().jsonPath().getInt("id"));
+    MovieListHelper.deleteList(response.body().jsonPath().getInt("id"));
   }
 
   @Test
@@ -41,7 +30,7 @@ public class CreateListTests {
             .spec(SpecFactory.getCreateListSpec())
             .extract()
             .response();
-    listIds.add(response.body().jsonPath().getInt("id"));
+    MovieListHelper.deleteList(response.body().jsonPath().getInt("id"));
   }
 
   @Test
@@ -60,6 +49,6 @@ public class CreateListTests {
         .get(EndPoints.GET_LIST, listId, 1, RestAssuredSettings.API_KEY)
         .then()
         .statusCode(200);
-    listIds.add(listId);
+    MovieListHelper.deleteList(listId);
   }
 }

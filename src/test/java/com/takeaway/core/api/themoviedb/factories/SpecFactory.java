@@ -7,7 +7,6 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 
 public class SpecFactory {
@@ -89,7 +88,6 @@ public class SpecFactory {
         .expectBody("status_message", is("Success."))
         .expectBody("success", is(true))
         .expectBody("id", is(listId))
-        .expectBody("items_deleted", greaterThan(0))
         .build();
   }
 }
