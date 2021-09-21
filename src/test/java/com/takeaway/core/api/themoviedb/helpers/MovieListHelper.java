@@ -60,16 +60,4 @@ public class MovieListHelper {
         .body()
         .as(MovieList.class);
   }
-
-  public static Response addItems(int listId, ItemList itemList) {
-    return given()
-        .spec(RestAssuredSettings.requestSpecWithAuth)
-        .body(itemList)
-        .when()
-        .post(EndPoints.ADD_ITEMS, listId)
-        .then()
-        .spec(SpecFactory.getAddItemsSpecSuccess(itemList))
-        .extract()
-        .response();
-  }
 }

@@ -3,6 +3,7 @@ package com.takeaway.testcases.api.themoviedb;
 import com.takeaway.core.api.themoviedb.factories.ItemsFactory;
 import com.takeaway.core.api.themoviedb.factories.Movie;
 import com.takeaway.core.api.themoviedb.factories.MovieListResultFactory;
+import com.takeaway.core.api.themoviedb.helpers.ItemHelper;
 import com.takeaway.core.api.themoviedb.helpers.MovieListHelper;
 import com.takeaway.core.api.themoviedb.model.ItemList;
 import com.takeaway.core.api.themoviedb.model.MovieList;
@@ -20,7 +21,7 @@ public class AddItemsTests {
   public void addOneItemTest() {
     int listId = MovieListHelper.createPublicDefaultList().body().jsonPath().getInt("id");
     ItemList itemList = ItemsFactory.getListWithMediaId(Movie.FIGHT_CLUB);
-    MovieListHelper.addItems(listId, itemList);
+    ItemHelper.addItems(listId, itemList);
     MovieList movieList = MovieListHelper.getPublicList(listId);
     assertThat(
         "The movie list should have a Fight Club in result",
@@ -32,7 +33,7 @@ public class AddItemsTests {
   public void addEmptyItemTest() {
     int listId = MovieListHelper.createPublicDefaultList().body().jsonPath().getInt("id");
     ItemList itemList = new ItemList(Collections.emptyList());
-    MovieListHelper.addItems(listId, itemList);
+    ItemHelper.addItems(listId, itemList);
     MovieList movieList = MovieListHelper.getPublicList(listId);
     assertThat("The movie list should be empty", movieList.getResults().size() == 0);
     MovieListHelper.deleteList(listId);
@@ -42,7 +43,7 @@ public class AddItemsTests {
   public void addSeveralItemsTest() {
     int listId = MovieListHelper.createPublicDefaultList().body().jsonPath().getInt("id");
     ItemList itemList = ItemsFactory.getAllMediaList();
-    MovieListHelper.addItems(listId, itemList);
+    ItemHelper.addItems(listId, itemList);
     MovieList movieList = MovieListHelper.getPublicList(listId);
     assertThat(
         "The movie list size should be correct",
@@ -54,8 +55,8 @@ public class AddItemsTests {
   public void addDuplicateItemTest() {
     int listId = MovieListHelper.createPublicDefaultList().body().jsonPath().getInt("id");
     ItemList itemList = ItemsFactory.getListWithMediaId(Movie.FIGHT_CLUB);
-    MovieListHelper.addItems(listId, itemList);
-    MovieListHelper.addItems(listId, itemList);
+    ItemHelper.addItems(listId, itemList);
+    ItemHelper.addItems(listId, itemList);
     MovieList movieList = MovieListHelper.getPublicList(listId);
     assertThat("The movie list size should be correct", movieList.getResults().size() == 1);
     MovieListHelper.deleteList(listId);
