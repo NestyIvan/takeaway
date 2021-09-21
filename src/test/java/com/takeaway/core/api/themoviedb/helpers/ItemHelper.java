@@ -28,4 +28,14 @@ public class ItemHelper {
         .then()
         .spec(SpecFactory.getAddItemsSpecSuccess(itemList));
   }
+
+  public static void deleteItems(int listId, ItemList itemList) {
+    given()
+        .spec(RestAssuredSettings.requestSpecWithAuth)
+        .body(itemList)
+        .when()
+        .delete(EndPoints.DELETE_ITEMS, listId)
+        .then()
+        .spec(SpecFactory.getAddItemsSpecSuccess(itemList));
+  }
 }

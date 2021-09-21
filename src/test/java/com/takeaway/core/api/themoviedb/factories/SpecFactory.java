@@ -5,6 +5,8 @@ import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.specification.ResponseSpecification;
 import org.json.JSONObject;
 
+import java.util.List;
+
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 
@@ -65,6 +67,18 @@ public class SpecFactory {
         .expectBody("status_message", is("Success."))
         .expectBody("success", is(true))
         .expectBody("results.size()", is(itemList.getItems().size()))
+        .build();
+  }
+
+  public static ResponseSpecification getUpdateItemsSpecFail(List<Integer> failedItemIds) {
+    return new ResponseSpecBuilder()
+        .expectStatusCode(200)
+        .expectBody("status_code", is(1))
+        .expectBody("status_message", is("Success."))
+        .expectBody("success", is(true))
+        .expectBody(
+            "results.findAll( { element -> element.success == false }).size()",
+            is(failedItemIds.size()))
         .build();
   }
 
