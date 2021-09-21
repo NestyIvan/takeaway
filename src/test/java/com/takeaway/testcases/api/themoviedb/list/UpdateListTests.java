@@ -5,9 +5,9 @@ import com.takeaway.core.api.themoviedb.EndPoints;
 import com.takeaway.core.api.themoviedb.factories.MovieListFactory;
 import com.takeaway.core.api.themoviedb.factories.SpecFactory;
 import com.takeaway.core.api.themoviedb.helpers.MovieListHelper;
+import com.takeaway.core.api.themoviedb.model.MovieList;
 import io.restassured.response.Response;
 import lombok.extern.log4j.Log4j;
-import org.json.JSONObject;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -32,13 +32,7 @@ public class UpdateListTests {
 
   @Test
   public void updateListAllFieldsTest() {
-    given()
-        .spec(RestAssuredSettings.requestSpecWithAuth)
-        .body(MovieListFactory.getListWithAllFields().toString())
-        .when()
-        .put(EndPoints.UPDATE_LIST, listId)
-        .then()
-        .spec(SpecFactory.getUpdateListSpec());
+    MovieListHelper.updateList(MovieListFactory.getListWithAllFields(), listId);
   }
 
   @Test
@@ -50,15 +44,9 @@ public class UpdateListTests {
         .spec(RestAssuredSettings.requestSpecNoAuth)
         .put(EndPoints.UPDATE_LIST, listId)
         .then()
-        .spec(SpecFactory.getUpdateListSpecUnauthorized());
+        .spec(SpecFactory.getSpecUnauthorized());
     // update with access token
-    given()
-        .spec(RestAssuredSettings.requestSpecWithAuth)
-        .body(MovieListFactory.getListWithAllFields().toString())
-        .when()
-        .put(EndPoints.UPDATE_LIST, listId)
-        .then()
-        .spec(SpecFactory.getUpdateListSpec());
+    MovieListHelper.updateList(MovieListFactory.getListWithAllFields(), listId);
     MovieListHelper.deleteList(listId);
   }
 
@@ -67,35 +55,23 @@ public class UpdateListTests {
     Response response = MovieListHelper.createPublicDefaultList();
     int listId = response.body().jsonPath().getInt("id");
     // make public list private
-    given()
-        .spec(RestAssuredSettings.requestSpecWithAuth)
-        .body(MovieListFactory.getListWithAccess(false).toString())
-        .when()
-        .put(EndPoints.UPDATE_LIST, listId)
-        .then()
-        .spec(SpecFactory.getUpdateListSpec());
+    MovieListHelper.updateList(MovieListFactory.getListWithAccess(false), listId);
 
     given()
         .spec(RestAssuredSettings.requestSpecNoAuth)
         .get(EndPoints.GET_LIST, listId, 1, RestAssuredSettings.API_KEY)
         .then()
-        .spec(SpecFactory.getListSpecUnauthorized());
+        .spec(SpecFactory.getListIsPrivateSpec());
     MovieListHelper.deleteList(listId);
   }
 
   @Test
   public void makePrivateListPublicTest() {
-    JSONObject publicMovieList = MovieListFactory.getListWithAccess(true);
+    MovieList publicMovieList = MovieListFactory.getListWithAccess(true);
     Response response = MovieListHelper.createPrivateList();
     int listId = response.body().jsonPath().getInt("id");
     // make private list public
-    given()
-        .spec(RestAssuredSettings.requestSpecWithAuth)
-        .body(publicMovieList.toString())
-        .when()
-        .put(EndPoints.UPDATE_LIST, listId)
-        .then()
-        .spec(SpecFactory.getUpdateListSpec());
+    MovieListHelper.updateList(publicMovieList, listId);
 
     given()
         .spec(RestAssuredSettings.requestSpecNoAuth)
@@ -109,10 +85,10 @@ public class UpdateListTests {
   public void updateNonExistingListTest() {
     given()
         .spec(RestAssuredSettings.requestSpecWithAuth)
-        .body(MovieListFactory.getListWithAllFields().toString())
+        .body(MovieListFactory.getListWithAllFields())
         .when()
         .put(EndPoints.UPDATE_LIST, listId * 10)
         .then()
-        .spec(SpecFactory.getUpdateListSpecNotFound());
+        .spec(SpecFactory.getSpecNotFound());
   }
 }

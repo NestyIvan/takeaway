@@ -1,8 +1,11 @@
 package com.takeaway.testcases.api.themoviedb.items;
 
+import com.takeaway.core.api.RestAssuredSettings;
+import com.takeaway.core.api.themoviedb.EndPoints;
 import com.takeaway.core.api.themoviedb.factories.ItemsFactory;
 import com.takeaway.core.api.themoviedb.factories.Movie;
 import com.takeaway.core.api.themoviedb.factories.MovieListResultFactory;
+import com.takeaway.core.api.themoviedb.factories.SpecFactory;
 import com.takeaway.core.api.themoviedb.helpers.ItemHelper;
 import com.takeaway.core.api.themoviedb.helpers.MovieListHelper;
 import com.takeaway.core.api.themoviedb.model.ItemList;
@@ -15,6 +18,7 @@ import org.junit.Test;
 
 import java.util.Collections;
 
+import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 @Log4j
@@ -71,5 +75,17 @@ public class AddItemsTests {
     ItemHelper.addItems(listId, itemList);
     MovieList movieList = MovieListHelper.getPublicList(listId);
     assertThat("The movie list size should be correct", movieList.getResults().size() == 1);
+  }
+
+  @Test
+  public void addItemNoAuthTest() {
+    int listId = defaultListResponse.body().jsonPath().getInt("id");
+    given()
+        .spec(RestAssuredSettings.requestSpecNoAuth)
+        .body(ItemsFactory.getListWithMediaId(Movie.FIGHT_CLUB))
+        .when()
+        .post(EndPoints.ADD_ITEMS, listId)
+        .then()
+        .spec(SpecFactory.getSpecUnauthorized());
   }
 }

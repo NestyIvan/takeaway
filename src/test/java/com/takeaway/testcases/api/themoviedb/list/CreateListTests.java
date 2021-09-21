@@ -23,7 +23,7 @@ public class CreateListTests {
     Response response =
         given()
             .spec(RestAssuredSettings.requestSpecWithAuth)
-            .body(MovieListFactory.getListWithAllFields().toString())
+            .body(MovieListFactory.getListWithAllFields())
             .when()
             .post(EndPoints.CREATE_LIST, RestAssuredSettings.API_KEY)
             .then()
@@ -42,7 +42,7 @@ public class CreateListTests {
         .spec(RestAssuredSettings.requestSpecNoAuth)
         .get(EndPoints.GET_LIST, listId, 1, RestAssuredSettings.API_KEY)
         .then()
-        .spec(SpecFactory.getListSpecUnauthorized());
+        .spec(SpecFactory.getListIsPrivateSpec());
     // get the list with access token
     given()
         .spec(RestAssuredSettings.requestSpecWithAuth)
@@ -50,5 +50,16 @@ public class CreateListTests {
         .then()
         .statusCode(200);
     MovieListHelper.deleteList(listId);
+  }
+
+  @Test
+  public void createListNoAuthTest() {
+    given()
+        .spec(RestAssuredSettings.requestSpecNoAuth)
+        .body(MovieListFactory.getDefaultList())
+        .when()
+        .post(EndPoints.CREATE_LIST, RestAssuredSettings.API_KEY)
+        .then()
+        .spec(SpecFactory.getCreateListUnauthorizedSpec());
   }
 }

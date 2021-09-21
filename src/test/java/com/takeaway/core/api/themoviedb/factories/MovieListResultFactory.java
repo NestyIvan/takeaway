@@ -19,10 +19,10 @@ public class MovieListResultFactory {
     return MovieListResult.builder()
         .adult(false)
         .id(550)
-        .media_type("movie")
-        .original_language("en")
-        .original_title("Fight Club")
-        .release_date("1999-10-15")
+        .mediaType("movie")
+        .originalLanguage("en")
+        .originalTitle("Fight Club")
+        .releaseDate("1999-10-15")
         .title("Fight Club")
         .build();
   }
@@ -31,10 +31,10 @@ public class MovieListResultFactory {
     return MovieListResult.builder()
         .adult(false)
         .id(791373)
-        .media_type("movie")
-        .original_language("en")
-        .original_title("Zack Snyder's Justice League")
-        .release_date("2021-03-18")
+        .mediaType("movie")
+        .originalLanguage("en")
+        .originalTitle("Zack Snyder's Justice League")
+        .releaseDate("2021-03-18")
         .title("Zack Snyder's Justice League")
         .build();
   }
@@ -43,10 +43,10 @@ public class MovieListResultFactory {
     return MovieListResult.builder()
         .adult(false)
         .id(577922)
-        .media_type("movie")
-        .original_language("en")
-        .original_title("Tenet")
-        .release_date("2020-08-22")
+        .mediaType("movie")
+        .originalLanguage("en")
+        .originalTitle("Tenet")
+        .releaseDate("2020-08-22")
         .title("Tenet")
         .build();
   }

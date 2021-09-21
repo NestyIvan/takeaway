@@ -1,6 +1,9 @@
 package com.takeaway.testcases.api.themoviedb.list;
 
+import com.takeaway.core.api.RestAssuredSettings;
+import com.takeaway.core.api.themoviedb.EndPoints;
 import com.takeaway.core.api.themoviedb.factories.ItemsFactory;
+import com.takeaway.core.api.themoviedb.factories.SpecFactory;
 import com.takeaway.core.api.themoviedb.helpers.ItemHelper;
 import com.takeaway.core.api.themoviedb.helpers.MovieListHelper;
 import com.takeaway.core.api.themoviedb.model.MovieList;
@@ -9,6 +12,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ClearListTests {
@@ -39,5 +43,27 @@ public class ClearListTests {
   public void clearEmptyListTest() {
     int listId = defaultListResponse.body().jsonPath().getInt("id");
     MovieListHelper.clearList(listId);
+  }
+
+  @Test
+  public void clearNonExistingListTest() {
+    int listId = defaultListResponse.body().jsonPath().getInt("id");
+    given()
+        .spec(RestAssuredSettings.requestSpecWithAuth)
+        .when()
+        .get(EndPoints.CLEAR_LIST, listId * 10)
+        .then()
+        .spec(SpecFactory.getSpecNotFound());
+  }
+
+  @Test
+  public void clearListNoAuthTest() {
+    int listId = defaultListResponse.body().jsonPath().getInt("id");
+    given()
+        .spec(RestAssuredSettings.requestSpecNoAuth)
+        .when()
+        .get(EndPoints.CLEAR_LIST, listId)
+        .then()
+        .spec(SpecFactory.getSpecUnauthorized());
   }
 }

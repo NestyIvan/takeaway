@@ -84,4 +84,16 @@ public class DeleteItemsTests {
     MovieList movieList = MovieListHelper.getPublicList(listId);
     assertThat("The movie list size should be correct", movieList.getResults().size() == 0);
   }
+
+  @Test
+  public void deleteItemsNoAuthTest() {
+    int listId = defaultListResponse.body().jsonPath().getInt("id");
+    given()
+        .spec(RestAssuredSettings.requestSpecNoAuth)
+        .body(new ItemList(Collections.emptyList()))
+        .when()
+        .delete(EndPoints.DELETE_ITEMS, listId)
+        .then()
+        .spec(SpecFactory.getSpecUnauthorized());
+  }
 }

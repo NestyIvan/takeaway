@@ -11,10 +11,10 @@ import static io.restassured.RestAssured.given;
 
 public class MovieListHelper {
 
-  public static Response createList(String body) {
+  public static Response createList(MovieList movieList) {
     return given()
         .spec(RestAssuredSettings.requestSpecWithAuth)
-        .body(body)
+        .body(movieList)
         .when()
         .post(EndPoints.CREATE_LIST, RestAssuredSettings.API_KEY)
         .then()
@@ -23,12 +23,22 @@ public class MovieListHelper {
         .response();
   }
 
+  public static void updateList(MovieList movieList, int listId) {
+    given()
+        .spec(RestAssuredSettings.requestSpecWithAuth)
+        .body(movieList)
+        .when()
+        .put(EndPoints.UPDATE_LIST, listId)
+        .then()
+        .spec(SpecFactory.getUpdateListSpec());
+  }
+
   public static Response createPrivateList() {
-    return createList(MovieListFactory.getListWithAccess(false).toString());
+    return createList(MovieListFactory.getListWithAccess(false));
   }
 
   public static Response createPublicDefaultList() {
-    return createList(MovieListFactory.getDefaultList().toString());
+    return createList(MovieListFactory.getDefaultList());
   }
 
   public static void deleteList(int listId) {

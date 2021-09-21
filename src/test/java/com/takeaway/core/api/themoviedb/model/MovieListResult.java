@@ -1,5 +1,6 @@
 package com.takeaway.core.api.themoviedb.model;
 
+import com.google.gson.annotations.SerializedName;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 
@@ -7,10 +8,20 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode
 public class MovieListResult {
   private boolean adult;
+
   private int id;
-  private String media_type;
-  private String original_language;
-  private String original_title;
-  private String release_date;
+
+  @SerializedName("media_type")
+  private String mediaType;
+
+  @SerializedName("original_language")
+  private String originalLanguage;
+
+  @SerializedName("original_title")
+  private String originalTitle;
+
+  @SerializedName("release_date")
+  private String releaseDate;
+
   private String title;
 }

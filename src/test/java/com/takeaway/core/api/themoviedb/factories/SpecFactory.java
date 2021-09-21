@@ -1,9 +1,9 @@
 package com.takeaway.core.api.themoviedb.factories;
 
 import com.takeaway.core.api.themoviedb.model.ItemList;
+import com.takeaway.core.api.themoviedb.model.MovieList;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.specification.ResponseSpecification;
-import org.json.JSONObject;
 
 import java.util.List;
 
@@ -11,15 +11,15 @@ import static org.hamcrest.Matchers.is;
 
 public class SpecFactory {
 
-  public static ResponseSpecification getListSpecSuccess(JSONObject movieList) {
+  public static ResponseSpecification getListSpecSuccess(MovieList movieList) {
     return new ResponseSpecBuilder()
         .expectStatusCode(200)
-        .expectBody("name", is(movieList.get("name")))
-        .expectBody("iso_639_1", is(movieList.get("iso_639_1")))
+        .expectBody("name", is(movieList.getName()))
+        .expectBody("iso_639_1", is(movieList.getIso6391()))
         .build();
   }
 
-  public static ResponseSpecification getListSpecUnauthorized() {
+  public static ResponseSpecification getListIsPrivateSpec() {
     return new ResponseSpecBuilder()
         .expectStatusCode(401)
         .expectBody("success", is(false))
@@ -32,6 +32,19 @@ public class SpecFactory {
     return new ResponseSpecBuilder().expectStatusCode(201).expectBody("success", is(true)).build();
   }
 
+  public static ResponseSpecification getCreateListUnauthorizedSpec() {
+    return new ResponseSpecBuilder()
+        .expectStatusCode(401)
+        .expectBody("success", is(false))
+        .expectBody("status_code", is(36))
+        .expectBody(
+            "status_message", is("This token hasn't been granted write permission by the user."))
+        .expectBody(
+            "error_message",
+            is("You must specify an Authorization header with a Bearer token to proceed."))
+        .build();
+  }
+
   public static ResponseSpecification getUpdateListSpec() {
     return new ResponseSpecBuilder()
         .expectStatusCode(201)
@@ -41,7 +54,7 @@ public class SpecFactory {
         .build();
   }
 
-  public static ResponseSpecification getUpdateListSpecUnauthorized() {
+  public static ResponseSpecification getSpecUnauthorized() {
     return new ResponseSpecBuilder()
         .expectStatusCode(401)
         .expectBody("success", is(false))
@@ -50,7 +63,7 @@ public class SpecFactory {
         .build();
   }
 
-  public static ResponseSpecification getUpdateListSpecNotFound() {
+  public static ResponseSpecification getSpecNotFound() {
     return new ResponseSpecBuilder()
         .expectStatusCode(404)
         .expectBody("success", is(false))
