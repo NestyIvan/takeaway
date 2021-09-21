@@ -1,6 +1,5 @@
 package com.takeaway.core.api.themoviedb.factories;
 
-import com.takeaway.core.api.themoviedb.model.ItemList;
 import com.takeaway.core.api.themoviedb.model.MovieList;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.specification.ResponseSpecification;
@@ -72,13 +71,12 @@ public class SpecFactory {
         .build();
   }
 
-  public static ResponseSpecification getAddItemsSpecSuccess(ItemList itemList) {
+  public static ResponseSpecification getAddItemsSpecSuccess() {
     return new ResponseSpecBuilder()
         .expectStatusCode(200)
         .expectBody("status_code", is(1))
         .expectBody("status_message", is("Success."))
         .expectBody("success", is(true))
-        .expectBody("results.size()", is(itemList.getItems().size()))
         .build();
   }
 

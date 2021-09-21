@@ -16,7 +16,7 @@ public class ItemHelper {
         .when()
         .post(EndPoints.ADD_ITEMS, listId)
         .then()
-        .spec(SpecFactory.getAddItemsSpecSuccess(itemList));
+        .spec(SpecFactory.getAddItemsSpecSuccess());
   }
 
   public static void updateItems(int listId, ItemList itemList) {
@@ -26,7 +26,7 @@ public class ItemHelper {
         .when()
         .put(EndPoints.UPDATE_ITEMS, listId)
         .then()
-        .spec(SpecFactory.getAddItemsSpecSuccess(itemList));
+        .spec(SpecFactory.getAddItemsSpecSuccess());
   }
 
   public static void deleteItems(int listId, ItemList itemList) {
@@ -36,6 +36,6 @@ public class ItemHelper {
         .when()
         .delete(EndPoints.DELETE_ITEMS, listId)
         .then()
-        .spec(SpecFactory.getAddItemsSpecSuccess(itemList));
+        .spec(SpecFactory.getAddItemsSpecSuccess());
   }
 }

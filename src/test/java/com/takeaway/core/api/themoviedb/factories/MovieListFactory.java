@@ -8,7 +8,7 @@ public class MovieListFactory {
 
   public static MovieList getDefaultList() {
     return MovieList.builder()
-        .name(faker.regexify("[a-z1-9]{10}"))
+        .name(faker.regexify("[a-z]{10}"))
         .iso6391("en")
         .publicValue(true)
         .build();
@@ -16,7 +16,7 @@ public class MovieListFactory {
 
   public static MovieList getListWithAllFields() {
     return MovieList.builder()
-        .name(faker.regexify("[a-z1-9]{10}"))
+        .name(faker.regexify("[a-z]{10}"))
         .iso6391("en")
         .description(faker.rickAndMorty().quote())
         .publicValue(true)
@@ -26,7 +26,7 @@ public class MovieListFactory {
 
   public static MovieList getListWithAccess(boolean isPublic) {
     return MovieList.builder()
-        .name(faker.regexify("[a-z1-9]{10}"))
+        .name(faker.regexify("[a-z]{10}"))
         .iso6391("en")
         .publicValue(isPublic)
         .build();
