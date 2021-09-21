@@ -1,9 +1,9 @@
 The test challenge project for themoviedb
 
 Prerequisites
-JDK 8 and higher
-Account in themoviedb is created
-The Access token is prepared and approved as described here https://developers.themoviedb.org/4/auth/user-authorization-1
+1. JDK 8 and higher
+2. Account in themoviedb is created
+3. The Access token is prepared and approved as described here https://developers.themoviedb.org/4/auth/user-authorization-1
 
 In order to run tests pass the write access token and the api key of your profile
 
